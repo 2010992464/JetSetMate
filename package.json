@@ -1,0 +1,25 @@
+{
+  "name": "jetsetmate",
+  "version": "1.0.0",
+  "description": "A travel companion finder application",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2010992464/JetSetMate.git"
+  },
+  "keywords": [
+    "Travel"
+  ],
+  "author": "Supreet Kaur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2010992464/JetSetMate/issues"
+  },
+  "homepage": "https://github.com/2010992464/JetSetMate#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
