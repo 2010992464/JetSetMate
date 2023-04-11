@@ -1,0 +1,41 @@
+[
+    {
+        "uid": 12356,
+        "username": "Supreet Kaur",
+        "email": "supreet@gmail.com",
+        "passkey": "#######",
+        "phoneNumber": "987523590",
+        "dob": "78-89-8956",
+        "emailVerified": false,
+        "phoneNumbered": true,
+        "posts": ["1235689","7895689"],
+        "requestSent": ["78956","562389"],
+        "requests" : ["78956","256398"],
+        "intrests": ["travel","food","drinks"],
+        "followers":["78956","562369"],
+        "following":["56893","889632"],
+        "accountVerified": true,
+        "joinedAt": "78596323"
+    },
+    {
+        "postId":"7956",
+        "uid": "785623",
+        "PostImgUrl": "https://test.com",
+        "PostDescription":"I want to travel",
+        "type":["Sharing","joining request"],
+        "requirements": ["Gender","Budget"],
+        "intrests": ["travel","food","dance"],
+        "startingDestination": "78956623",
+        "checkpoints": ["7795623","56789767"],
+        "hashtags": ["delhiDiaries"],
+        "postedAt": "78-8-8569"
+
+    },
+    {
+        "requestId":"78956236",
+        "uid":"785623",
+        "requestedUser": "78956",
+        "requestDescription":"I want to travel with you",
+        "requestStatus": "Accepted"
+    }
+]
