@@ -12,7 +12,7 @@
     <title>TravelSaathi</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Socialite is - Professional A unique and beautiful collection of UI elements">
+    <meta name="description" content="TravelSaathi is platform to - Connect with friends and the world around you.">
 
     <!-- icons
     ================================================== -->
@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="/assets/css/uikit.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/tail.css">
-    <!-- <link href="../../unpkg.com/tailwindcss%402.2.19/dist/tailwind.min.css" rel="stylesheet">  -->
 
     <style>
         body{
@@ -40,24 +39,23 @@
 
             <div class="lg:mb-12 flex-1 lg:text-left text-center">
                 <img src="/assets/images/logo.png" alt="" class="lg:mx-0 lg:w-52 mx-auto w-40">
-                <p class="font-medium lg:mx-0 md:text-2xl mt-6 mx-auto sm:w-3/4 text-xl"> Connect with friends and the world around you on Socialite.</p>
+                <p class="font-medium lg:mx-0 md:text-2xl mt-6 mx-auto sm:w-3/4 text-xl"> Connect with friends and the world around you on TravelSaathi.</p>
             </div>
             <div class="lg:mt-0 lg:w-96 md:w-1/2 sm:w-2/3 mt-10 w-full">
-                <form class="p-6 space-y-4 relative bg-white shadow-lg rounded-lg"> 
-                    <input type="email" placeholder="Email or Phone Number" class="with-border">
-                    <input type="password" placeholder="Password" class="with-border">
-                    <button type="button" class="bg-blue-600 font-semibold p-3 rounded-md text-center text-white w-full">
+                <div class="p-6 space-y-4 relative bg-white shadow-lg rounded-lg"> 
+                    <div id="errorArea"></div>
+                    <input type="email" placeholder="Email" id="email_log" class="with-border">
+                    <input type="password" placeholder="Password" id="password_log" class="with-border">
+                    <button type="button"  onclick="validateLog()" class="bg-blue-600 font-semibold p-3 rounded-md text-center text-white w-full">
                         Log In
                     </button>
-                    <a href="#" class="text-blue-500 text-center block"> Forgot Password? </a>
                     <hr class="pb-3.5">
                     <div class="flex">
                         <a href="#register" type="button" class="bg-green-600 hover:bg-green-500 hover:text-white font-semibold py-3 px-5 rounded-md text-center text-white mx-auto" uk-toggle>
                             Create New Account
                         </a>
                     </div>
-                </form>
-
+                </div>
                 <div class="mt-8 text-center text-sm"> <a href="#" class="font-semibold hover:underline"> Create a Page </a> for a celebrity, band or business </div>
             </div>
     
@@ -73,17 +71,19 @@
                 <div class="text-base text-gray-600"> It’s quick and easy.</div>
             </div>
             <form class="p-7 space-y-5">
+                <div id="errorArea_sign"></div>
                 <div class="grid lg:grid-cols-2 gap-5">
-                    <input type="text" placeholder="Your Name" class="with-border">
-                    <input type="text" placeholder="Last  Name" class="with-border">
+                    <input type="text" placeholder="Your Name" id="fname" class="with-border">
+                    <input type="text" placeholder="Last  Name" id="lname" class="with-border">
                 </div>
-                <input type="email" placeholder="Info@example.com" class="with-border">
-                <input type="password" placeholder="******" class="with-border">
+                <input type="email" placeholder="Info@example.com" id="email_sign"class="with-border">
+                <input type="password" placeholder="******" id="password_sign" class="with-border">
+                <input type="password" placeholder="***Confirm Password***" id="cPassword_sign" class="with-border">
                 
                 <div class="grid lg:grid-cols-2 gap-3">
                     <div>
                         <label class="mb-0"> Gender </label>
-                        <select class="selectpicker mt-2 with-border">
+                        <select class="selectpicker mt-2 with-border" id="gender">
                             <option>Male</option>
                             <option>Female</option>
                         </select>
@@ -91,7 +91,7 @@
                     </div>
                     <div>
                         <label class="mb-2"> Phone: optional  </label>
-                        <input type="text" placeholder="+543 5445 0543" class="with-border">
+                        <input type="text" placeholder="+543 5445 0543" id="pNumber" class="with-border">
                     </div>
                 </div>
                 <p class="text-xs text-gray-400 pt-3">By clicking Sign Up, you agree to our
@@ -101,7 +101,7 @@
                      You may receive SMS Notifications from us and can opt out any time.
                 </p>
                 <div class="flex">
-                    <button type="button" class="bg-blue-600 font-semibold mx-auto px-10 py-3 rounded-md text-center text-white">
+                    <button type="button" onclick="validate()" class="bg-blue-600 font-semibold mx-auto px-10 py-3 rounded-md text-center text-white">
                         Get Started
                     </button>
                 </div>
@@ -148,7 +148,131 @@
   
     <!-- Javascript
     ================================================== -->
+    
      <script src="/assets/js/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        const login = document.getElementById('xs-login-form')
+        const signUp = document.getElementById('xs-signup-form')
+        if (getCookie('userToken').trim()) {
+            window.location.href = '/feed/'
+        }
+        function validate() {
+            const email = document.getElementById("email_sign").value
+            if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                showErrorSign("You have entered an invalid email address!")
+                return (false)
+            }
+            const name = document.getElementById("fname").value + document.getElementById("lname").value
+            const password = document.getElementById("password_sign").value;
+            const gender = document.getElementById("gender").value;
+            const pNumber = document.getElementById("pNumber").value;
+            const confirmPassword = document.getElementById("cPassword_sign").value
+
+            if (password !== confirmPassword) {
+                document.getElementById("cPassword_sign").value = ''
+                showErrorSign('Please check the password again')
+            }
+
+            const userCred = {
+                name,
+                email,
+                password,
+                gender,
+                pNumber
+            }
+            postData('/auth/signup/', userCred)
+        }
+        function showError(e) {
+            const errorArea = document.getElementById('errorArea')
+            errorArea.innerHTML = `<div style="color:red; text-align:center;">${e}</div>`
+            setTimeout(() => {
+                errorArea.innerHTML = ''
+            }, 4000)
+        }
+        function showErrorSign(e) {
+            const errorArea = document.getElementById('errorArea_sign')
+            errorArea.innerHTML = `<div style="color:red; text-align:center;">${e}</div>`
+            setTimeout(() => {
+                errorArea.innerHTML = ''
+            }, 4000)
+        }
+        function setCookie(cname, cvalue) {
+            const d = new Date();
+            d.setTime(d.getTime() + (5 * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        async function postData(url, data) {
+            $.ajax({
+                type: 'POST',
+                url,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: 'json'
+            }).then(async (response) => {
+                if(response.status=='success'){
+                    const userToken= response.data;
+                await setCookie('userToken', userToken);
+                window.location.href = '/feed'
+                }else{
+                    showError
+(""+response.error)                }
+            })
+        }
+        async function postDataLog(url , data) {
+            // const response = await fetch(url, {
+            //     method: 'POST',
+            //     body: JSON.stringify(data)
+            // });
+            $.ajax({
+                type: 'POST',
+                url,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: 'json'
+            }).then(async (response)=>{
+                if(response.status=='success'){
+                    const userToken= response.data;
+                await setCookie('userToken', userToken)
+                window.location.href = '/feed'
+                }else{
+                    showError
+(""+response.error)                }
+            })
+            }
+            function validateLog(){
+            const email = document.getElementById("email_log").value 
+            if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+            {
+                showError("You have entered an invalid email address!")
+                return (false)
+            }
+            const password = document.getElementById("password_log").value
+
+            
+            const userCred = {
+                email,
+                password,
+            }
+
+            postDataLog('/login/',userCred)
+        }
+    </script>
     <script src="/assets/js/tippy.all.min.js"></script>
     <script src="/assets/js/uikit.js"></script>
     <script src="/assets/js/simplebar.js"></script>
